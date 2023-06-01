@@ -15,7 +15,7 @@ export class SearchBar extends Component {
     event.preventDefault();
     console.log(this.state.search);
     if (!this.state.search.trim()) {
-      return alert('Please tipe text');
+      return alert('Please type text');
     }
     //props - function update from parent(App)
     this.props.update(this.state.search);

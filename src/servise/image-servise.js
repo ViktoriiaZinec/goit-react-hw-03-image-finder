@@ -15,8 +15,13 @@ export async function fetchPhotos(input, index) {
   //   console.log(input);
   return await API.get('', { params: { q: input, page: index } }).then(
     response => {
-      console.log(response.data);
       return response.data;
     }
   );
+  // .catch(error => {
+  //   this.setState({ error: error.message });
+  // });
+  // .finally(() => {
+  //   setTimeout(() => this.setState({ isLoading: false }), 2000);
+  // });
 }
