@@ -18,10 +18,11 @@ export class ImageGallery extends Component {
   };
 
   callServer(searchLine, page) {
-    this.setState({
-      ...this.state,
+    this.setState(state => ({
+      ...state,
       isLoading: true,
-    });
+    }));
+
     fetchPhotos(searchLine, page)
       .then(result => {
         // console.log('fetch', result, typeof result);
@@ -69,8 +70,8 @@ export class ImageGallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     // console.log('didUpdate', this.props, this.state);
     if (this.props.search !== prevProps.search) {
-      console.log(this.props.search);
-      console.log(prevProps.search);
+      // console.log(this.props.search);
+      // console.log(prevProps.search);
       this.clearGallery();
       this.callServer(this.props.search, 1);
     }
