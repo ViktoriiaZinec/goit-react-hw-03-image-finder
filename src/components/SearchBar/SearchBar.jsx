@@ -13,7 +13,7 @@ export class SearchBar extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.search);
+    // console.log(this.state.search);
     if (!this.state.search.trim()) {
       return alert('Please type text');
     }

@@ -14,27 +14,30 @@ export class ImageGallery extends Component {
     error: false,
     page: 1,
     modalItem: null,
-    isLoading: true,
+    isLoading: false,
   };
 
   callServer(searchLine, page) {
-    fetchPhotos(searchLine, page).then(result => {
-      console.log('fetch', result);
-
-      this.setState(state => ({
-        // photos: state.photos.concat(result.hits),
-        photos: [...state.photos, ...result.hits],
-        loading: false,
-        error: false,
-        page: page,
-      }))
-        .catch(error => {
-          this.setState({ error: error.message });
-        })
-        .finally(() => {
-          setTimeout(() => this.setState({ isLoading: false }), 2000);
-        });
+    this.setState({
+      ...this.state,
+      isLoading: true,
     });
+    fetchPhotos(searchLine, page)
+      .then(result => {
+        // console.log('fetch', result, typeof result);
+        this.setState(state => ({
+          // photos: state.photos.concat(result.hits),
+          photos: [...state.photos, ...result.hits],
+          loading: false,
+          error: false,
+          isLoading: false,
+          page: page,
+        }));
+      })
+      .catch(error => {
+        console.log(error.message);
+        this.setState({ isLoading: false });
+      });
   }
   clearGallery() {
     this.setState(state => ({
@@ -46,7 +49,7 @@ export class ImageGallery extends Component {
   }
 
   showModal = item => {
-    console.log('show', item);
+    // console.log('show', item);
     this.setState(state => {
       return {
         ...state,
@@ -64,20 +67,22 @@ export class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('didUpdate', this.props, this.state);
+    // console.log('didUpdate', this.props, this.state);
     if (this.props.search !== prevProps.search) {
-      this.setState({ isLoading: true });
+      console.log(this.props.search);
+      console.log(prevProps.search);
       this.clearGallery();
       this.callServer(this.props.search, 1);
     }
   }
   onLoadMore = () => {
     this.callServer(this.props.search, this.state.page + 1);
+    // this.setState({ ...this.state, isLoading: true });
   };
 
   render() {
     if (this.state.photos.length) {
-      console.log('render', this.state.photos);
+      // console.log('render', this.state.photos);
       return (
         <>
           <ul className={css.image_gallery}>
@@ -96,10 +101,10 @@ export class ImageGallery extends Component {
               closeModal={this.closeModal}
             ></Modal>
           )}
-          {this.isLoading && <Loader />}
+          {this.state.isLoading && <Loader />}
         </>
       );
     }
-    return false;
+    return this.state.isLoading && <Loader />;
   }
 }

@@ -18,10 +18,4 @@ export async function fetchPhotos(input, index) {
       return response.data;
     }
   );
-  // .catch(error => {
-  //   this.setState({ error: error.message });
-  // });
-  // .finally(() => {
-  //   setTimeout(() => this.setState({ isLoading: false }), 2000);
-  // });
 }
