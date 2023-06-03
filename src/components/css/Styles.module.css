@@ -218,3 +218,10 @@ img {
   display: flex;
   background: rgba(0, 0, 0, 0.6);
 }
+
+.sorry {
+  text-align: center;
+  color: red;
+  font-size: 25px;
+  margin-top: 40px;
+}

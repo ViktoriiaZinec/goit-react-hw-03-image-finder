@@ -5,6 +5,7 @@ import { fetchPhotos } from 'servise/image-servise';
 import { Modal } from './Modal/Modal';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
+import css from './css/Styles.module.css';
 
 export class App extends Component {
   state = {
@@ -88,7 +89,7 @@ export class App extends Component {
       <>
         <SearchBar update={this.updateSearch} />
         <ImageGallery
-          search={this.state.search}
+          // search={this.state.search}
           photos={this.state.photos}
           onShowModal={this.showModal}
         />
@@ -97,7 +98,11 @@ export class App extends Component {
         ) : (
           ''
         )}
-        {this.state.isEmpty ? 'Sorry,there are no photos available' : ''}
+        {this.state.isEmpty ? (
+          <p className={css.sorry}> Sorry, there are no photos available</p>
+        ) : (
+          ''
+        )}
         {this.state.modalItem && (
           <Modal
             item={this.state.modalItem}
