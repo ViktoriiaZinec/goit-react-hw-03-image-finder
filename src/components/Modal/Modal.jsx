@@ -1,5 +1,6 @@
 import css from '../css/Styles.module.css';
 import { Component } from 'react';
+import propTypes from 'prop-types';
 
 export class Modal extends Component {
   // add key Esc for Close
@@ -31,3 +32,8 @@ export class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  closeModal: propTypes.func.isRequired,
+  item: propTypes.object.isRequired,
+};

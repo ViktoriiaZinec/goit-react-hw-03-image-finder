@@ -1,4 +1,6 @@
 import css from '../css/Styles.module.css';
+import propTypes from 'prop-types';
+
 export function ImageGalleryItem({ item, onClick }) {
   function clickHandler(e) {
     onClick(item);
@@ -14,3 +16,7 @@ export function ImageGalleryItem({ item, onClick }) {
     </li>
   );
 }
+ImageGalleryItem.propTypes = {
+  item: propTypes.object.isRequired,
+  onClick: propTypes.func.isRequired,
+};

@@ -1,6 +1,7 @@
 // import { Audio } from 'react-loader-spinner';
 import css from '../css/Styles.module.css';
 import { ColorRing } from 'react-loader-spinner';
+import propTypes from 'prop-types';
 
 export const Loader = () => {
   return (
@@ -23,4 +24,8 @@ export const Loader = () => {
       />
     </div>
   );
+};
+
+Loader.propTypes = {
+  loading: propTypes.bool.isRequired,
 };

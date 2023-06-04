@@ -6,6 +6,7 @@ import { Modal } from './Modal/Modal';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import css from './css/Styles.module.css';
+import propTypes from 'prop-types';
 
 export class App extends Component {
   state = {
@@ -20,11 +21,10 @@ export class App extends Component {
   };
 
   callServer(searchLine, page) {
-    this.setState(state => ({
-      ...state,
+    this.setState({
       isLoading: true,
       isEmpty: false,
-    }));
+    });
 
     fetchPhotos(searchLine, page)
       .then(result => {
@@ -39,50 +39,43 @@ export class App extends Component {
         }));
       })
       .catch(error => {
+        this.setState({ error: error.message });
+      })
+      .finally(error => {
         this.setState({ isLoading: false });
       });
   }
 
-  clearPhotos() {
-    this.setState(state => ({
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.search !== this.state.search) {
+      this.callServer(this.state.search, this.state.page);
+    }
+  }
+  onLoadMore = () => {
+    this.callServer(
+      this.state.search,
+      this.state.page + 1,
+      this.setState(prev => ({ page: prev.page + 1 }))
+    );
+  };
+
+  updateSearch = searchLine => {
+    this.setState({
+      search: searchLine,
       photos: [],
       loading: false,
       error: false,
       page: 1,
       pageCount: 1,
       isEmpty: false,
-    }));
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.search !== this.state.search) {
-      this.clearPhotos();
-      this.callServer(this.state.search, 1);
-    }
-  }
-  onLoadMore = () => {
-    this.callServer(this.state.search, this.state.page + 1);
-  };
-
-  updateSearch = searchLine => {
-    this.setState({ search: searchLine });
+    });
   };
 
   showModal = item => {
-    this.setState(state => {
-      return {
-        ...state,
-        modalItem: item,
-      };
-    });
+    this.setState({ modalItem: item });
   };
   closeModal = () => {
-    this.setState(state => {
-      return {
-        ...state,
-        modalItem: null,
-      };
-    });
+    this.setState({ modalItem: null });
   };
   render() {
     return (
@@ -93,15 +86,11 @@ export class App extends Component {
           photos={this.state.photos}
           onShowModal={this.showModal}
         />
-        {this.state.page < this.state.pageCount ? (
+        {this.state.page < this.state.pageCount && (
           <Button onLoadMore={this.onLoadMore} />
-        ) : (
-          ''
         )}
-        {this.state.isEmpty ? (
+        {this.state.isEmpty && (
           <p className={css.sorry}> Sorry, there are no photos available</p>
-        ) : (
-          ''
         )}
         {this.state.modalItem && (
           <Modal
@@ -114,3 +103,7 @@ export class App extends Component {
     );
   }
 }
+
+App.propsTypes = {
+  search: propTypes.string,
+};

@@ -1,4 +1,5 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import propTypes from 'prop-types';
 
 import css from '../css/Styles.module.css';
 
@@ -13,3 +14,8 @@ export function ImageGallery({ photos, onShowModal }) {
     </>
   );
 }
+
+ImageGallery.propTypes = {
+  photos: propTypes.array.isRequired,
+  onShowModal: propTypes.func.isRequired,
+};
