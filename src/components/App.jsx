@@ -47,7 +47,10 @@ export class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.search !== this.state.search) {
+    if (
+      prevState.search !== this.state.search ||
+      prevState.page !== this.state.page
+    ) {
       this.callServer(this.state.search, this.state.page);
     }
   }
