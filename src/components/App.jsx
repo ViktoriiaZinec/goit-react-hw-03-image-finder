@@ -6,7 +6,6 @@ import { Modal } from './Modal/Modal';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import css from './css/Styles.module.css';
-import propTypes from 'prop-types';
 
 export class App extends Component {
   state = {
@@ -55,11 +54,7 @@ export class App extends Component {
     }
   }
   onLoadMore = () => {
-    this.callServer(
-      this.state.search,
-      this.state.page + 1,
-      this.setState(prev => ({ page: prev.page + 1 }))
-    );
+    this.setState(prev => ({ page: prev.page + 1 }));
   };
 
   updateSearch = searchLine => {
@@ -106,7 +101,3 @@ export class App extends Component {
     );
   }
 }
-
-App.propsTypes = {
-  search: propTypes.string,
-};

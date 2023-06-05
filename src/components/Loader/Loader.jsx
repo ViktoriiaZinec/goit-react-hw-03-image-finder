@@ -6,13 +6,6 @@ import propTypes from 'prop-types';
 export const Loader = () => {
   return (
     <div className={css.loader}>
-      {/* <Audio
-        height="80"
-        width="80"
-        radius="9"
-        color="green"
-        ariaLabel="loading"
-      /> */}
       <ColorRing
         visible={true}
         height="80"
@@ -27,5 +20,5 @@ export const Loader = () => {
 };
 
 Loader.propTypes = {
-  loading: propTypes.bool.isRequired,
+  loading: propTypes.bool,
 };
